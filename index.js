@@ -63,15 +63,15 @@ const lyrics = [
   "Never gonna make you cry",
   "Never gonna say goodbye",
   "Never gonna tell a lie and hurt you",
-  "Karaoke Night has finished.",
+  "<a href='https://bussis.gay/'>Fuck you</a>"
 ];
 
 const currentLine = JSON.parse(window.localStorage.getItem("line"));
 
 if (currentLine === null) {
   window.localStorage.setItem("line", "0");
-} else if (currentLine >= 61) {
-  window.localStorage.setItem("line", "61");
+} else if (currentLine >= 62) {
+  window.localStorage.setItem("line", "62");
 } else {
   window.localStorage.setItem("line", JSON.stringify(currentLine + 1));
 }
