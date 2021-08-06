@@ -63,7 +63,7 @@ const lyrics = [
   "Never gonna make you cry",
   "Never gonna say goodbye",
   "Never gonna tell a lie and hurt you",
-  "<a href='https://bussis.gay/'>Fuck you</a>"
+  "Karaoke night over"
 ];
 
 const currentLine = JSON.parse(window.localStorage.getItem("line"));
