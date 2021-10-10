@@ -73,6 +73,7 @@ a {
   text-decoration: none;
   transition-duration: 0.4s;
   color: white;
+  cursor: pointer;
 }
 
 a:hover {
