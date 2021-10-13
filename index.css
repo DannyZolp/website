@@ -1,4 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:ital,wght@1,200&display=swap");
+@font-face {
+  font-family: "Open Sans";
+  src: url("OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("Poppins-LightItalic.ttf") format("truetype");
+}
 
 body {
   background: linear-gradient(270deg, #00f2ff, #8d00ff);
