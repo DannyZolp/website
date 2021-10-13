@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Open Sans";
-  src: url("OpenSans-Regular.ttf") format("truetype");
+  src: url("opensans.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Poppins";
-  src: url("Poppins-LightItalic.ttf") format("truetype");
+  src: url("poppins.ttf") format("truetype");
 }
 
 body {
@@ -151,4 +151,9 @@ svg {
   h2 {
     font-size: 36px;
   }
+}
+
+ul {
+  list-style-type: none;
+  text-align: center;
 }
