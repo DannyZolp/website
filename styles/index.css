@@ -1,11 +1,13 @@
 @font-face {
   font-family: "Open Sans";
   src: url("opensans.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Poppins";
   src: url("poppins.ttf") format("truetype");
+  font-display: swap;
 }
 
 body {

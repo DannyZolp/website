@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+  <meta>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -26,11 +26,14 @@
     <meta property="og:image" content="https://www.dannyzolp.com/preview.jpg" />
     <meta property="og:site_name" content="DannyZolp.com" />
     <meta property="og:locale" content="en_US" />
-    <link rel="stylesheet" href="styles/index.css" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'sha256-hnr3aoa+cmTBR77V03cBF2ptfPx1Y9aMSaBt3EU6FGA=' 'strict-dynamic';object-src 'none';base-uri 'none';" />
+    <link rel="prefetch" href="/styles/poppins.ttf" as="font" />
+    <link rel="prefetch" href="/styles/opensans.ttf" as="font" />
+    <link rel="stylesheet" href="/styles/index.css" />
     <link rel="stylesheet" href="styles/christmas.css" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <title>DannyZolp.com</title>
-  </head>
+  </meta>
 
   <body>
     <div class="snowflake"></div>
@@ -165,7 +168,10 @@
     </main>
     <footer>
       Made with love by Danny Zolp, Copyright 2021 |
-      <a href="https://github.com/DannyZolp/website" target="_blank"
+      <a
+        href="https://github.com/DannyZolp/website"
+        target="_blank"
+        rel="noreferrer"
         >Source Code</a
       >
       |
@@ -235,21 +241,24 @@
         "Never gonna make you cry",
         "Never gonna say goodbye",
         "Never gonna tell a lie and hurt you",
-        "<a onclick='window.localStorage.clear(); window.location.reload()'>Karaoke night over</a>"
-      ];
+        "<a id='reset'>Karaoke night over</a>",
+      ],
+      currentLine = JSON.parse(window.localStorage.getItem("line"));
+    null === currentLine
+      ? window.localStorage.setItem("line", "0")
+      : currentLine >= 62
+      ? window.localStorage.setItem("line", "62")
+      : window.localStorage.setItem("line", JSON.stringify(currentLine + 1)),
+      (document.getElementById("tagline").innerHTML =
+        lyrics[JSON.parse(window.localStorage.getItem("line"))]);
 
-      const currentLine = JSON.parse(window.localStorage.getItem("line"));
+      var reset = document.getElementById("reset");
 
-      if (currentLine === null) {
-        window.localStorage.setItem("line", "0");
-      } else if (currentLine >= 62) {
-        window.localStorage.setItem("line", "62");
-      } else {
-        window.localStorage.setItem("line", JSON.stringify(currentLine + 1));
+      if (reset) {
+        reset.addEventListener("click", () => {
+        window.localStorage.clear(); window.location.reload()
+      });
       }
-
-      document.getElementById("tagline").innerHTML =
-        lyrics[JSON.parse(window.localStorage.getItem("line"))];
     </script>
   </body>
 </html>
