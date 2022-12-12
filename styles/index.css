@@ -18,8 +18,8 @@ body {
   position: relative;
   overflow: hidden;
 
-  background: linear-gradient(270deg, #00f2ff, #8d00ff);
-  background-size: 400% 400%;
+  background: linear-gradient(225deg, #cc231e, #cc231e, #ddd, #34a65f, #34a65f);
+  background-size: 400% 600%;
 
   -webkit-animation: BackgroundFade 30s ease infinite;
   -moz-animation: BackgroundFade 30s ease infinite;
