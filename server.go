@@ -6,11 +6,26 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	"strings"
 
 	http10 "github.com/DannyZolp/website/http10"
 	http11 "github.com/DannyZolp/website/http11"
 )
+
+var cachedFiles map[string][]byte
+
+func generateCachedFiles() {
+	cachedFiles = make(map[string][]byte)
+
+	// index.html
+	index, err := os.ReadFile("./public/index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	cachedFiles["/"] = index
+
+}
 
 func main() {
 	l, err := net.Listen("tcp", ":8080")

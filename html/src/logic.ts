@@ -1,5 +1,15 @@
-async function printWithModemDelay(array) {
-  return new Promise((res, rej) => {
+import type { Terminal } from "@xterm/xterm";
+import {
+  header,
+  socialMedia,
+  resume,
+  resumeMenu,
+  guestbookMenu,
+  guestbookPage,
+} from "./menus.ts";
+
+async function printWithModemDelay(array: (() => void)[]) {
+  return new Promise((res, _rej) => {
     const delay = ((80 * 7) / 56000) * 1000;
     var line = 0;
     const print = setInterval(() => {
@@ -11,12 +21,12 @@ async function printWithModemDelay(array) {
 
     setTimeout(() => {
       clearInterval(print);
-      res();
-    }, delay * header().length + 500);
+      res(true);
+    }, delay * array.length + 500);
   });
 }
 
-function writeHeader(term) {
+function writeHeader(term: Terminal) {
   const h = header(term);
   printWithModemDelay(h).then(() => {
     enableKeyboard(term);
@@ -28,14 +38,16 @@ var guestbookPageNumber = 0;
 var typingMessageToSysop = false;
 var sysopMsg = "";
 
-function mainMenuCommand(cmd, term) {
+function mainMenuCommand(cmd: string, term: Terminal) {
   if (typingMessageToSysop) {
     if (cmd === "\r") {
       typingMessageToSysop = false;
       term.write("\r\nMessage sent!\r\n\nMain Menu> ");
     } else if (cmd === "\x7f") {
-      sysopMsg = sysopMsg.slice(0, -1);
-      term.write("\x08 \x08");
+      if (sysopMsg.length > 0) {
+        sysopMsg = sysopMsg.slice(0, -1);
+        term.write("\x08 \x08");
+      }
     } else if (cmd.charCodeAt(0) === 3) {
       sysopMsg = "";
       typingMessageToSysop = false;
@@ -71,7 +83,7 @@ function mainMenuCommand(cmd, term) {
   }
 }
 
-function resumeMenuCommand(cmd, term) {
+function resumeMenuCommand(cmd: string, term: Terminal) {
   if (cmd === "T" || cmd === "t") {
     term.write("T\r\n");
 
@@ -99,15 +111,17 @@ var typingMessage = false;
 var name = "";
 var message = "";
 
-function guestbookMenuCommand(cmd, term) {
+function guestbookMenuCommand(cmd: string, term: Terminal) {
   if (typingName) {
     if (cmd === "\r") {
       typingName = false;
       term.write("\r\nWhat is your message? ");
       typingMessage = true;
     } else if (cmd === "\x7f") {
-      name = name.slice(0, -1);
-      term.write("\x08 \x08");
+      if (name.length > 0) {
+        name = name.slice(0, -1);
+        term.write("\x08 \x08");
+      }
     } else if (cmd.charCodeAt(0) === 3) {
       name = "";
       message = "";
@@ -124,8 +138,10 @@ function guestbookMenuCommand(cmd, term) {
       typingMessage = false;
       term.write("\r\nAdded to guestbook!\r\n\nGuestbook> ");
     } else if (cmd === "\x7f") {
-      message = message.slice(0, -1);
-      term.write("\x08 \x08");
+      if (message.length > 0) {
+        message = message.slice(0, -1);
+        term.write("\x08 \x08");
+      }
     } else if (cmd.charCodeAt(0) === 3) {
       name = "";
       message = "";
@@ -172,7 +188,7 @@ function guestbookMenuCommand(cmd, term) {
   }
 }
 
-function enableKeyboard(term) {
+function enableKeyboard(term: Terminal) {
   term.onKey((e) => {
     if (menu === "resume") {
       resumeMenuCommand(e.key, term);
@@ -184,14 +200,14 @@ function enableKeyboard(term) {
   });
 }
 
-function getRandomInt(max) {
+function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
 var hostname =
   "hv0" + getRandomInt(2) + "vm" + getRandomInt(10).toString().padStart(2, "0");
 
-function activateTelnet(term) {
+export function activateTelnet(term: Terminal) {
   if (navigator.userAgent.indexOf("Win") > 0) {
     // windows environment, mimic powershell
     term.write("PS C:\\Users\\danny> telnet dannyzolp.com\n\r");

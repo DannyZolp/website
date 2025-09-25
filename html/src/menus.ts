@@ -1,4 +1,6 @@
-const socialMedia = (term) => {
+import type { Terminal } from "@xterm/xterm";
+
+export const socialMedia = (term: Terminal) => {
   return [
     () => term.write("\n\x1b[37;1mGitHub:    https://github.com/DannyZolp\r\n"),
     () =>
@@ -9,7 +11,26 @@ const socialMedia = (term) => {
   ];
 };
 
-const resume = async (term) => {
+type ResumeExperience = {
+  company: string;
+  date: string;
+  position: string;
+};
+
+type ResumeEducation = {
+  institution: string;
+  date: string;
+  studyType: string;
+  area: string;
+};
+
+type ResumeVolunteering = {
+  organization: string;
+  date: string;
+  position: string;
+};
+
+export const resume = async (term: Terminal) => {
   const resume = await (await fetch("/resume.json")).json();
   return [
     () =>
@@ -25,7 +46,7 @@ const resume = async (term) => {
           "\r\n\n"
       ),
     () => term.write(" ".repeat(20) + "\x1b[1mExperience:\r\n\n\x1b[0m"),
-    ...resume.sections.experience.items.map((e) => {
+    ...resume.sections.experience.items.map((e: ResumeExperience) => {
       return () =>
         term.write(
           e.company +
@@ -37,7 +58,7 @@ const resume = async (term) => {
         );
     }),
     () => term.write(" ".repeat(20) + "\x1b[1mEducation:\r\n\n\x1b[0m"),
-    ...resume.sections.education.items.map((e) => {
+    ...resume.sections.education.items.map((e: ResumeEducation) => {
       return () =>
         term.write(
           e.institution +
@@ -51,7 +72,7 @@ const resume = async (term) => {
         );
     }),
     () => term.write(" ".repeat(20) + "\x1b[1mVolunteering:\r\n\n\x1b[0m"),
-    ...resume.sections.volunteer.items.map((e) => {
+    ...resume.sections.volunteer.items.map((e: ResumeVolunteering) => {
       return () =>
         term.write(
           e.organization +
@@ -65,7 +86,7 @@ const resume = async (term) => {
   ];
 };
 
-const resumeMenu = (term) => {
+export const resumeMenu = (term: Terminal) => {
   return [
     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n"),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
@@ -81,7 +102,7 @@ const resumeMenu = (term) => {
   ];
 };
 
-const guestbookMenu = (term) => {
+export const guestbookMenu = (term: Terminal) => {
   return [
     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n"),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
@@ -97,14 +118,20 @@ const guestbookMenu = (term) => {
   ];
 };
 
-const guestbookPage = (term, entries) => {
+type GuestbookEntry = {
+  date: string;
+  name: string;
+  message: string;
+};
+
+export const guestbookPage = (term: Terminal, entries: GuestbookEntry[]) => {
   return entries.map((e) => {
     return () =>
       term.write("    [" + e.date + "]  " + e.name + ": " + e.message + "\r\n");
   });
 };
 
-const header = (term) => {
+export const header = (term: Terminal) => {
   return [
     () => term.write("\n"),
 
