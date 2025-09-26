@@ -18,6 +18,7 @@ const (
 func WriteWithBrotli(c net.Conn, input []byte) {
 	bWriter := brotli.NewWriter(c)
 	bWriter.Write(input)
+	bWriter.Flush()
 	bWriter.Close()
 	c.Close()
 }

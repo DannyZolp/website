@@ -136,7 +136,29 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
   } else if (typingMessage) {
     if (cmd === "\r") {
       typingMessage = false;
-      term.write("\r\nAdded to guestbook!\r\n\nGuestbook> ");
+
+      fetch("/guestbook", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          message,
+        }),
+      })
+        .then((r) => r.json())
+        .then((res) => {
+          if (res === "OK") {
+            term.write("\r\nAdded to guestbook!\r\n\nGuestbook> ");
+          } else {
+            term.write(
+              "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> "
+            );
+          }
+        })
+        .catch(() => {
+          term.write(
+            "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> "
+          );
+        });
     } else if (cmd === "\x7f") {
       if (message.length > 0) {
         message = message.slice(0, -1);

@@ -1,12 +1,15 @@
 package http11
 
 import (
+	"bufio"
 	"container/list"
 	"net"
 	"strings"
+
+	"gorm.io/gorm"
 )
 
-func HandleRequest(c net.Conn, request list.List) {
+func HandleRequest(c net.Conn, reader *bufio.Reader, request list.List, cachedFiles map[string][]byte, db *gorm.DB) {
 	header := request.Front().Value.(string)
 	header = strings.Replace(header, "HTTP/1.1", "", 1)
 	methodAndPath := strings.Split(strings.Trim(header, " "), " ")
@@ -23,11 +26,9 @@ func HandleRequest(c net.Conn, request list.List) {
 
 	switch method {
 	case "GET":
-		handleGet(c, request, path)
+		handleGet(c, request, path, cachedFiles, db)
 	case "POST":
-		break
-	case "PUT":
-		badRequest(c)
+		handlePost(c, reader, request, path, db)
 	default:
 		{
 			badRequest(c)
