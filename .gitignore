@@ -1,2 +1,7 @@
 .env
 guestbook.db
+*.key
+*.pfx
+*.cer
+*.pem
+*.csr

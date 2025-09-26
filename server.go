@@ -3,11 +3,13 @@ package main
 import (
 	"bufio"
 	"container/list"
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/DannyZolp/website/guestbook"
 	"github.com/DannyZolp/website/http10"
@@ -49,34 +51,6 @@ func generateCachedFiles() {
 	cachedFiles["/"] = index
 }
 
-func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	generateCachedFiles()
-
-	db = guestbook.OpenDatabase()
-
-	l, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer l.Close()
-
-	fmt.Println("Server listening on http://localhost:8080/")
-
-	for {
-		c, err := l.Accept()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		go handleConnection(c)
-	}
-}
-
 func handleConnection(c net.Conn) {
 	reader := bufio.NewReader(c)
 	request := list.New()
@@ -84,8 +58,8 @@ func handleConnection(c net.Conn) {
 	for {
 		msg, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println(err)
-			continue
+			c.Close()
+			return
 		}
 
 		if msg == "\r\n" {
@@ -102,5 +76,55 @@ func handleConnection(c net.Conn) {
 	} else {
 		c.Close()
 	}
+}
+
+func listen(l net.Listener, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for {
+		c, err := l.Accept()
+		if err != nil {
+			c.Close()
+			return
+		}
+		go handleConnection(c)
+	}
+}
+
+func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	generateCachedFiles()
+
+	db = guestbook.OpenDatabase()
+
+	http, err := net.Listen("tcp", ":8080")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer http.Close()
+
+	cert, err := tls.LoadX509KeyPair(os.Getenv("CERT"), os.Getenv("KEY"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	https, err := tls.Listen("tcp", ":8443", &tls.Config{Certificates: []tls.Certificate{cert}})
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer https.Close()
+
+	fmt.Println("Server listening on http://localhost:8080/ and https://localhost:8443/")
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go listen(http, &wg)
+	go listen(https, &wg)
+
+	wg.Wait()
 
 }
