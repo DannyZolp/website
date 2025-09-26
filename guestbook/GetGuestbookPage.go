@@ -19,7 +19,13 @@ func GetGuestbookPage(db *gorm.DB, pageNumber int, c net.Conn) {
 
 	entries := make([]EntryResponse, 5)
 
-	for i := 0; i < 5; i++ {
+	max := 5
+
+	if len(dbEntries) < 5 {
+		max = len(dbEntries)
+	}
+
+	for i := 0; i < max; i++ {
 		entries[i] = EntryResponse{
 			Name:    dbEntries[i].Name,
 			Message: dbEntries[i].Message,
