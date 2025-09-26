@@ -1,4 +1,4 @@
-package http11
+package http10
 
 import (
 	"container/list"
@@ -22,18 +22,12 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			after, _ := strings.CutPrefix(e.Value.(string), "Host: ")
 			host = strings.Trim(after, "\r\n ")
 		} else if strings.HasPrefix(e.Value.(string), "Accept-Encoding: ") {
-			if strings.Contains(e.Value.(string), "br") {
-				encoding = helpers.Brotli
-			} else if strings.Contains(e.Value.(string), "gzip") {
+			if strings.Contains(e.Value.(string), "gzip") {
 				encoding = helpers.GZIP
 			} else {
 				encoding = helpers.None
 			}
 		}
-	}
-	if strings.Compare(host, os.Getenv("HOST")) != 0 {
-		fmt.Println(host)
-		fmt.Println(os.Getenv("HOST"))
 	}
 
 	if strings.Contains(host, os.Getenv("HOST")) && host != "" {
@@ -49,32 +43,29 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			guestbook.GetGuestbookPage(db, page, c)
 			return
 		} else if cachedFiles[path] != nil {
-			c.Write([]byte("HTTP/1.1 200 OK\n"))
-			c.Write([]byte("Server: github.com/DannyZolp/http\n"))
-			c.Write([]byte("Date: " + helpers.GetDate() + "\n"))
-			c.Write([]byte("Cache-Control: public, max-age=3600\n"))
+			c.Write([]byte("HTTP/1.0 200 OK\r\n"))
+			c.Write([]byte("Server: github.com/DannyZolp/http\r\n"))
+			c.Write([]byte("Date: " + helpers.GetDate() + "\r\n"))
+			c.Write([]byte("Cache-Control: public, max-age=3600\r\n"))
 			if strings.HasSuffix(path, ".json") {
-				c.Write([]byte("Content-Type: application/json\n"))
+				c.Write([]byte("Content-Type: application/json\r\n"))
 			} else if strings.HasSuffix(path, ".pdf") {
-				c.Write([]byte("Content-Type: application/pdf\n"))
+				c.Write([]byte("Content-Type: application/pdf\r\n"))
 			} else if strings.HasSuffix(path, ".css") {
-				c.Write([]byte("Content-Type: text/css; charset=utf-8\n"))
+				c.Write([]byte("Content-Type: text/css; charset=utf-8\r\n"))
 			} else if strings.HasSuffix(path, ".js") {
-				c.Write([]byte("Content-Type: text/javascript; charset=utf-8\n"))
+				c.Write([]byte("Content-Type: text/javascript; charset=utf-8\r\n"))
 			} else {
-				c.Write([]byte("Content-Type: text/html; charset=utf-8\n"))
+				c.Write([]byte("Content-Type: text/html; charset=utf-8\r\n"))
 			}
 
 			switch encoding {
 			case helpers.None:
-				c.Write([]byte(fmt.Sprintf("Content-Length: %d\n\n", len(cachedFiles[path]))))
+				c.Write([]byte(fmt.Sprintf("Content-Length: %d\r\n\r\n", len(cachedFiles[path]))))
 				c.Write(cachedFiles[path])
-			case helpers.Brotli:
-				c.Write([]byte("Content-Encoding: br\n\n"))
-				helpers.WriteWithBrotli(c, cachedFiles[path])
 			case helpers.GZIP:
-				c.Write([]byte("Content-Encoding: gzip\n\n"))
-				helpers.WriteWithGZIP(c, cachedFiles[path], false)
+				c.Write([]byte("Content-Encoding: x-gzip\r\n"))
+				helpers.WriteWithGZIP(c, cachedFiles[path], true)
 			}
 		} else {
 			notFound(c)

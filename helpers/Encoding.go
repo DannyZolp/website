@@ -2,7 +2,9 @@ package helpers
 
 import (
 	"compress/gzip"
+	"fmt"
 	"net"
+	"strings"
 
 	"github.com/andybalholm/brotli"
 )
@@ -23,9 +25,18 @@ func WriteWithBrotli(c net.Conn, input []byte) {
 	c.Close()
 }
 
-func WriteWithGZIP(c net.Conn, input []byte) {
-	gWriter := gzip.NewWriter(c)
+func WriteWithGZIP(c net.Conn, input []byte, includeCarriageReturn bool) {
+	buf := new(strings.Builder)
+	gWriter := gzip.NewWriter(buf)
 	gWriter.Write(input)
 	gWriter.Close()
+
+	if includeCarriageReturn {
+		c.Write([]byte(fmt.Sprintf("Content-Length: %d\r\n\r\n", len(buf.String()))))
+	} else {
+		c.Write([]byte(fmt.Sprintf("Content-Length: %d\n\n", len(buf.String()))))
+	}
+	c.Write([]byte(buf.String()))
+
 	c.Close()
 }

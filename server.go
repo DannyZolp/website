@@ -65,6 +65,8 @@ func main() {
 	}
 	defer l.Close()
 
+	fmt.Println("Server listening on http://localhost:8080/")
+
 	for {
 		c, err := l.Accept()
 		if err != nil {
@@ -96,7 +98,7 @@ func handleConnection(c net.Conn) {
 	if strings.Contains(request.Front().Value.(string), "HTTP/1.1") {
 		http11.HandleRequest(c, reader, *request, cachedFiles, db)
 	} else if strings.Contains(request.Front().Value.(string), "HTTP/1.0") {
-		http10.HandleRequest(c, cachedFiles)
+		http10.HandleRequest(c, reader, *request, cachedFiles, db)
 	} else {
 		c.Close()
 	}
