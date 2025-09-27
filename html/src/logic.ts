@@ -241,7 +241,7 @@ export function activateTelnet(term: Terminal) {
   } else if (navigator.userAgent.indexOf("Mac") > 0) {
     // macos environment, mimic zsh
     term.write("danny@Mac ~ % telnet dannyzolp.com\n\r");
-    term.write("Trying 1.1.1.1...\n\r");
+    term.write("Trying 66.42.119.96...\n\r");
     setTimeout(() => {
       term.write("Connected to dannyzolp.com.\n\r");
       term.write("Escape character is '^]'.\n\r");
@@ -250,7 +250,7 @@ export function activateTelnet(term: Terminal) {
   } else {
     // use a generic bash environment for unix/linux
     term.write("danny@" + hostname + ":~$ telnet dannyzolp.com\n\r");
-    term.write("Trying 1.1.1.1...\n\r");
+    term.write("Trying 66.42.119.96...\n\r");
     setTimeout(() => {
       term.write("Connected to dannyzolp.com.\n\r");
       term.write("Escape character is '^]'.\n\r");

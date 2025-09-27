@@ -100,7 +100,7 @@ func main() {
 
 	db = guestbook.OpenDatabase()
 
-	http, err := net.Listen("tcp", ":8080")
+	http, err := net.Listen("tcp", fmt.Sprintf(":%s", os.Getenv("HTTP_PORT")))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -111,13 +111,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	https, err := tls.Listen("tcp", ":8443", &tls.Config{Certificates: []tls.Certificate{cert}})
+	https, err := tls.Listen("tcp", fmt.Sprintf(":%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer https.Close()
 
-	fmt.Println("Server listening on http://localhost:8080/ and https://localhost:8443/")
+	fmt.Printf("Server listening on http://localhost:%s/ and https://localhost:%s/\n", os.Getenv("HTTP_PORT"), os.Getenv("HTTPS_PORT"))
 
 	var wg sync.WaitGroup
 	wg.Add(2)
