@@ -69,6 +69,11 @@ func handleConnection(c net.Conn) {
 		}
 	}
 
+	if request.Front() == nil {
+		c.Close()
+		return
+	}
+
 	if strings.Contains(request.Front().Value.(string), "HTTP/1.1") {
 		http11.HandleRequest(c, reader, *request, cachedFiles, db)
 	} else if strings.Contains(request.Front().Value.(string), "HTTP/1.0") {
