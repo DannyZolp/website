@@ -105,30 +105,44 @@ func main() {
 
 	db = guestbook.OpenDatabase()
 
-	http, err := net.Listen("tcp", fmt.Sprintf(":%s", os.Getenv("HTTP_PORT")))
+	http, err := net.Listen("tcp4", fmt.Sprintf(":%s", os.Getenv("HTTP_PORT")))
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer http.Close()
+
+	httpv6, err := net.Listen("tcp6", fmt.Sprintf("[::]:%s", os.Getenv("HTTP_PORT")))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer httpv6.Close()
 
 	cert, err := tls.LoadX509KeyPair(os.Getenv("CERT"), os.Getenv("KEY"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	https, err := tls.Listen("tcp", fmt.Sprintf(":%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
+	https, err := tls.Listen("tcp4", fmt.Sprintf(":%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer https.Close()
 
-	fmt.Printf("Server listening on http://localhost:%s/ and https://localhost:%s/\n", os.Getenv("HTTP_PORT"), os.Getenv("HTTPS_PORT"))
+	httpsv6, err := tls.Listen("tcp6", fmt.Sprintf("[::]:%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer httpsv6.Close()
+
+	fmt.Println("Listening on ipv4 and ipv6 for http and https at provided ports")
 
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(4)
 
 	go listen(http, &wg)
 	go listen(https, &wg)
+	go listen(httpv6, &wg)
+	go listen(httpsv6, &wg)
 
 	wg.Wait()
 
