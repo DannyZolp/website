@@ -111,12 +111,6 @@ func main() {
 	}
 	defer http.Close()
 
-	httpv6, err := net.Listen("tcp6", fmt.Sprintf("%s:%s", os.Getenv("V6_ADDRESS"), os.Getenv("HTTP_PORT")))
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer httpv6.Close()
-
 	cert, err := tls.LoadX509KeyPair(os.Getenv("CERT"), os.Getenv("KEY"))
 	if err != nil {
 		log.Fatal(err)
@@ -128,21 +122,13 @@ func main() {
 	}
 	defer https.Close()
 
-	httpsv6, err := tls.Listen("tcp6", fmt.Sprintf("%s:%s", os.Getenv("V6_ADDRESS"), os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer httpsv6.Close()
-
-	fmt.Println("Listening on ipv4 and ipv6 for http and https at provided ports")
+	fmt.Println("Listening for http and https requests...")
 
 	var wg sync.WaitGroup
 	wg.Add(4)
 
 	go listen(http, &wg)
 	go listen(https, &wg)
-	go listen(httpv6, &wg)
-	go listen(httpsv6, &wg)
 
 	wg.Wait()
 
