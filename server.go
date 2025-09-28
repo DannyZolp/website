@@ -105,7 +105,7 @@ func main() {
 
 	db = guestbook.OpenDatabase()
 
-	http, err := net.Listen("tcp4", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTP_PORT")))
+	http, err := net.Listen("tcp", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTP_PORT")))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -116,7 +116,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	https, err := tls.Listen("tcp4", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
+	https, err := tls.Listen("tcp", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
 	if err != nil {
 		log.Fatal(err)
 	}
