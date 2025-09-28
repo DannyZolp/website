@@ -105,13 +105,13 @@ func main() {
 
 	db = guestbook.OpenDatabase()
 
-	http, err := net.Listen("tcp4", fmt.Sprintf(":%s", os.Getenv("HTTP_PORT")))
+	http, err := net.Listen("tcp4", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTP_PORT")))
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer http.Close()
 
-	httpv6, err := net.Listen("tcp6", fmt.Sprintf("[::]:%s", os.Getenv("HTTP_PORT")))
+	httpv6, err := net.Listen("tcp6", fmt.Sprintf("%s:%s", os.Getenv("V6_ADDRESS"), os.Getenv("HTTP_PORT")))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -122,13 +122,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	https, err := tls.Listen("tcp4", fmt.Sprintf(":%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
+	https, err := tls.Listen("tcp4", fmt.Sprintf("%s:%s", os.Getenv("V4_ADDRESS"), os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer https.Close()
 
-	httpsv6, err := tls.Listen("tcp6", fmt.Sprintf("[::]:%s", os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
+	httpsv6, err := tls.Listen("tcp6", fmt.Sprintf("%s:%s", os.Getenv("V6_ADDRESS"), os.Getenv("HTTPS_PORT")), &tls.Config{Certificates: []tls.Certificate{cert}})
 	if err != nil {
 		log.Fatal(err)
 	}
