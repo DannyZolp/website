@@ -17,13 +17,13 @@ func GetGuestbookPage(db *gorm.DB, pageNumber int, c net.Conn) {
 
 	dbEntries, _ := gorm.G[Entry](db).Where("id BETWEEN ? AND ?", startId, startId+5).Find(ctx)
 
-	entries := make([]EntryResponse, 5)
-
 	max := 5
 
 	if len(dbEntries) < 5 {
 		max = len(dbEntries)
 	}
+
+	entries := make([]EntryResponse, max)
 
 	for i := 0; i < max; i++ {
 		entries[i] = EntryResponse{
