@@ -55,7 +55,7 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 		return
 	} else if cachedFiles[path] != nil {
 		c.Write([]byte("HTTP/1.0 200 OK\r\n"))
-		c.Write([]byte("Server: github.com/DannyZolp/http\r\n"))
+		c.Write([]byte("Server: github.com/DannyZolp/website\r\n"))
 		c.Write([]byte("Date: " + helpers.GetDate() + "\r\n"))
 		c.Write([]byte("Cache-Control: public, max-age=3600\r\n"))
 		if strings.HasSuffix(path, ".json") {

@@ -57,7 +57,7 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 		return
 	} else if cachedFiles[path] != nil {
 		c.Write([]byte("HTTP/1.1 200 OK\n"))
-		c.Write([]byte("Server: github.com/DannyZolp/http\n"))
+		c.Write([]byte("Server: github.com/DannyZolp/website\n"))
 		c.Write([]byte("Date: " + helpers.GetDate() + "\n"))
 		c.Write([]byte("Cache-Control: public, max-age=3600\n"))
 		if strings.HasSuffix(path, ".json") {
@@ -80,7 +80,7 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			c.Write([]byte("Content-Encoding: br\n\n"))
 			helpers.WriteWithBrotli(c, cachedFiles[path])
 		case helpers.GZIP:
-			c.Write([]byte("Content-Encoding: gzip\n\n"))
+			c.Write([]byte("Content-Encoding: gzip\n"))
 			helpers.WriteWithGZIP(c, cachedFiles[path], false)
 		}
 	} else {
