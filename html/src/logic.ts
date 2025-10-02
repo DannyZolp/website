@@ -237,7 +237,7 @@ export function activateTelnet(term: Terminal) {
     setTimeout(() => {
       term.clear();
       writeHeader(term);
-    });
+    }, 500);
   } else if (navigator.userAgent.indexOf("Mac") > 0) {
     // macos environment, mimic zsh
     term.write("danny@Mac ~ % telnet dannyzolp.com\n\r");
