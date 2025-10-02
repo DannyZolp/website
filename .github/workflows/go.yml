@@ -26,6 +26,9 @@ jobs:
 
   build-vite:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./html
     steps:
     - uses: actions/checkout@v4
     - name: Set up pnpm
@@ -39,7 +42,7 @@ jobs:
         node-version: 22
         cache: 'pnpm'
     - name: Install deps
-      run: cd html; pnpm install
+      run: pnpm install
     - name: Attempt build
       run: pnpm build
   
