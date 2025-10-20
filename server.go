@@ -129,6 +129,7 @@ func main() {
 
 	go listen(http, &wg)
 	go listen(https, &wg)
+	go telnet(&wg)
 
 	wg.Wait()
 
