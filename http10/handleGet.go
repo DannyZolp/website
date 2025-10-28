@@ -10,10 +10,13 @@ import (
 
 	"github.com/DannyZolp/website/guestbook"
 	"github.com/DannyZolp/website/helpers"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 )
 
-func handleGet(c net.Conn, request list.List, path string, cachedFiles map[string][]byte, db *gorm.DB) {
+func handleGet(c net.Conn, request list.List, path string, cachedFiles map[string][]byte, db *gorm.DB, span trace.Span) {
 	var encoding helpers.Encoding = helpers.None
 	hosts := strings.Split(os.Getenv("HOST"), ",")
 
@@ -30,10 +33,14 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			}
 
 			if !validHost {
+				span.AddEvent("Host in request is not allowed", trace.WithAttributes(attribute.String("host", e.Value.(string))))
+				span.SetStatus(codes.Error, "Host in request is not allowed")
 				badRequest(c)
+				span.End()
 				return
 			}
 		} else if strings.HasPrefix(e.Value.(string), "Accept-Encoding: ") {
+			span.AddEvent("Found Encoding", trace.WithAttributes(attribute.String("encoding", e.Value.(string))))
 			if strings.Contains(e.Value.(string), "gzip") {
 				encoding = helpers.GZIP
 			} else {
@@ -47,12 +54,14 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 		page, err := strconv.Atoi(pageStr)
 
 		if err != nil {
+			span.SetStatus(codes.Error, "400")
+			span.RecordError(err)
 			badRequest(c)
+			span.End()
 			return
 		}
 
-		guestbook.GetGuestbookPage(db, page, c)
-		return
+		guestbook.GetGuestbookPage(db, page, c, span)
 	} else if cachedFiles[path] != nil {
 		c.Write([]byte("HTTP/1.0 200 OK\r\n"))
 		c.Write([]byte("Server: github.com/DannyZolp/website\r\n"))
@@ -81,6 +90,7 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 	} else {
 		notFound(c)
 	}
+	span.End()
 	c.Close()
 
 }

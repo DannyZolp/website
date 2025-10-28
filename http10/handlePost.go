@@ -7,13 +7,15 @@ import (
 	"strings"
 
 	"github.com/DannyZolp/website/guestbook"
+	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 )
 
-func handlePost(c net.Conn, reader *bufio.Reader, request list.List, path string, db *gorm.DB) {
+func handlePost(c net.Conn, reader *bufio.Reader, request list.List, path string, db *gorm.DB, span trace.Span) {
 	if strings.HasPrefix(path, "/guestbook") {
-		guestbook.AddGuestbookEntry(db, c, reader)
+		guestbook.AddGuestbookEntry(db, c, reader, span)
 	} else {
-		badRequest(c)
+		notFound(c)
+		span.End()
 	}
 }

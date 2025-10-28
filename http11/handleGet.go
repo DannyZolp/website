@@ -10,15 +10,19 @@ import (
 
 	"github.com/DannyZolp/website/guestbook"
 	"github.com/DannyZolp/website/helpers"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 )
 
-func handleGet(c net.Conn, request list.List, path string, cachedFiles map[string][]byte, db *gorm.DB) {
+func handleGet(c net.Conn, request list.List, path string, cachedFiles map[string][]byte, db *gorm.DB, span trace.Span) {
 	var encoding helpers.Encoding = helpers.None
 	hosts := strings.Split(os.Getenv("HOST"), ",")
 
 	for e := request.Front(); e != nil; e = e.Next() {
 		if strings.HasPrefix(e.Value.(string), "Host: ") {
+			span.AddEvent("Found Host", trace.WithAttributes(attribute.String("host", e.Value.(string))))
 			after, _ := strings.CutPrefix(e.Value.(string), "Host: ")
 			host := strings.Trim(after, "\r\n ")
 			validHost := false
@@ -30,10 +34,14 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			}
 
 			if !validHost {
+				span.AddEvent("Host in request is not allowed", trace.WithAttributes(attribute.String("host", e.Value.(string))))
+				span.SetStatus(codes.Error, "Host in request is not allowed")
 				badRequest(c)
+				span.End()
 				return
 			}
 		} else if strings.HasPrefix(e.Value.(string), "Accept-Encoding: ") {
+			span.AddEvent("Found Encoding", trace.WithAttributes(attribute.String("encoding", e.Value.(string))))
 			if strings.Contains(e.Value.(string), "br") {
 				encoding = helpers.Brotli
 			} else if strings.Contains(e.Value.(string), "gzip") {
@@ -49,12 +57,14 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 		page, err := strconv.Atoi(pageStr)
 
 		if err != nil {
+			span.SetStatus(codes.Error, "400")
+			span.RecordError(err)
 			badRequest(c)
+			span.End()
 			return
 		}
 
-		guestbook.GetGuestbookPage(db, page, c)
-		return
+		guestbook.GetGuestbookPage(db, page, c, span)
 	} else if cachedFiles[path] != nil {
 		c.Write([]byte("HTTP/1.1 200 OK\n"))
 		c.Write([]byte("Server: github.com/DannyZolp/website\n"))
@@ -87,5 +97,6 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 		notFound(c)
 	}
 	c.Close()
+	span.End()
 
 }

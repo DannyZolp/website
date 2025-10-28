@@ -7,15 +7,28 @@ import (
 	"net"
 
 	"github.com/DannyZolp/website/helpers"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 )
 
-func GetGuestbookPage(db *gorm.DB, pageNumber int, c net.Conn) {
+func GetGuestbookPage(db *gorm.DB, pageNumber int, c net.Conn, span trace.Span) {
 	ctx := context.Background()
 
 	startId := pageNumber * 5
 
-	dbEntries, _ := gorm.G[Entry](db).Where("id BETWEEN ? AND ?", startId, startId+5).Find(ctx)
+	dbEntries, err := gorm.G[Entry](db).Where("id BETWEEN ? AND ?", startId, startId+5).Find(ctx)
+
+	ctx.Done()
+
+	if err != nil {
+		span.SetStatus(codes.Error, "Error reading from database")
+		span.RecordError(err)
+		c.Close()
+		span.End()
+		return
+	}
 
 	max := 5
 
@@ -41,5 +54,8 @@ func GetGuestbookPage(db *gorm.DB, pageNumber int, c net.Conn) {
 	c.Write([]byte("Content-Type: application/json\n"))
 	c.Write([]byte(fmt.Sprintf("Content-Length: %d\n\n", len(response))))
 	c.Write(response)
+
+	span.AddEvent("Request sent!", trace.WithAttributes(attribute.String("body", string(response))))
+
 	c.Close()
 }
