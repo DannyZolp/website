@@ -151,7 +151,7 @@ func main() {
 	exporter, err := otlptrace.New(
 		context.Background(),
 		otlptracehttp.NewClient(
-			otlptracehttp.WithEndpoint("192.168.64.2:4318"),
+			otlptracehttp.WithEndpoint(os.Getenv("OTEL_ENDPOINT")),
 			otlptracehttp.WithHeaders(headers),
 			otlptracehttp.WithInsecure(),
 		),
