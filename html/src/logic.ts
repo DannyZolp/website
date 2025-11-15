@@ -65,13 +65,13 @@ function mainMenuCommand(cmd: string, term: Terminal) {
   } else if (cmd === "R" || cmd === "r") {
     term.write("R\r\n\n");
     const rm = resumeMenu(term);
-    printWithModemDelay(rm).then(() => {
+    return printWithModemDelay(rm).then(() => {
       menu = "resume";
     });
   } else if (cmd === "G" || cmd === "g") {
     term.write("G\r\n\n");
     const gm = guestbookMenu(term);
-    printWithModemDelay(gm).then(() => {
+    return printWithModemDelay(gm).then(() => {
       menu = "guestbook";
     });
   } else if (cmd === "P" || cmd === "p") {
