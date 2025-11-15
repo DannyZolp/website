@@ -64,16 +64,14 @@ function mainMenuCommand(cmd: string, term: Terminal) {
     printWithModemDelay(sm);
   } else if (cmd === "R" || cmd === "r") {
     term.write("R\r\n\n");
+    menu = "resume";
     const rm = resumeMenu(term);
-    return printWithModemDelay(rm).then(() => {
-      menu = "resume";
-    });
+    printWithModemDelay(rm);
   } else if (cmd === "G" || cmd === "g") {
     term.write("G\r\n\n");
+    menu = "guestbook";
     const gm = guestbookMenu(term);
-    return printWithModemDelay(gm).then(() => {
-      menu = "guestbook";
-    });
+    printWithModemDelay(gm);
   } else if (cmd === "P" || cmd === "p") {
     term.write("P\r\n\nWhat is your message? (Ctrl+C to cancel) ");
     typingMessageToSysop = true;
