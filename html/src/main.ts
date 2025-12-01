@@ -6,6 +6,10 @@ import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 import "./main.css";
 
+if (window.innerWidth < 774) {
+  window.location.href = "/plain.html";
+}
+
 var term = new Terminal({
   cursorBlink: true,
 });
