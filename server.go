@@ -31,7 +31,12 @@ func generateStructure(dir []os.DirEntry, sysPath string, webPath string) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			cachedFiles["/"+webPath+strings.Replace(item.Name(), ".html", "", 1)] = file
+			if strings.Contains(".html") {
+				cachedFiles["/"+webPath+strings.Replace(item.Name(), ".html", "", 1)] = file
+				cachedFiles["/"+webPath+item.Name()] = file
+			} else {
+				cachedFiles["/"+webPath+item.Name()] = file
+			}
 		}
 	}
 }

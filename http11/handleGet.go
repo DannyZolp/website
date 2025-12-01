@@ -68,6 +68,8 @@ func handleGet(c net.Conn, request list.List, path string, cachedFiles map[strin
 			c.Write([]byte("Content-Type: text/css; charset=utf-8\n"))
 		} else if strings.HasSuffix(path, ".js") {
 			c.Write([]byte("Content-Type: text/javascript; charset=utf-8\n"))
+		} else if strings.HasSuffix(path, ".html") {
+			c.Write([]byte("Content-Type: text/html; charset=utf-8\n"))
 		} else {
 			c.Write([]byte("Content-Type: text/html; charset=utf-8\n"))
 		}
