@@ -39,26 +39,7 @@ var typingMessageToSysop = false;
 var sysopMsg = "";
 
 function mainMenuCommand(cmd: string, term: Terminal) {
-  if (typingMessageToSysop) {
-    if (cmd === "\r") {
-      typingMessageToSysop = false;
-      term.write("\r\nMessage sent!\r\n\nMain Menu> ");
-    } else if (cmd === "\x7f") {
-      if (sysopMsg.length > 0) {
-        sysopMsg = sysopMsg.slice(0, -1);
-        term.write("\x08 \x08");
-      }
-    } else if (cmd.charCodeAt(0) === 3) {
-      sysopMsg = "";
-      typingMessageToSysop = false;
-      term.write("^C\r\n\nMain Menu> ");
-    } else {
-      if (sysopMsg.length < 250) {
-        term.write(cmd);
-        sysopMsg += cmd;
-      }
-    }
-  } else if (cmd === "S" || cmd === "s") {
+  if (cmd === "S" || cmd === "s") {
     term.write("S\r\n");
     const sm = socialMedia(term);
     printWithModemDelay(sm);
@@ -75,6 +56,7 @@ function mainMenuCommand(cmd: string, term: Terminal) {
   } else if (cmd === "P" || cmd === "p") {
     term.write("P\r\n\n")
     window.open("https://portfolio.dannyzolp.com/", "_blank");
+    term.write("Main Menu> ");
   } else if (cmd === "Q" || cmd === "q") {
     term.write("Q\r\n\nGoodbye\r\n\x1b[0mConnection closed by foreign host.");
     menu = "dead";
