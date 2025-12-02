@@ -177,7 +177,7 @@ export const header = (term: Terminal) => {
       term.write(
         "   |        \x1b[1mG - Access Guestbook" +
           " ".repeat(17) +
-          "P - Page Sysop                    |\r\n"
+          "P - View Portfolio                |\r\n"
       ),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
     () =>

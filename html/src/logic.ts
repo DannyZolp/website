@@ -73,8 +73,8 @@ function mainMenuCommand(cmd: string, term: Terminal) {
     const gm = guestbookMenu(term);
     printWithModemDelay(gm);
   } else if (cmd === "P" || cmd === "p") {
-    term.write("P\r\n\nWhat is your message? (Ctrl+C to cancel) ");
-    typingMessageToSysop = true;
+    term.write("P\r\n\n")
+    window.open("https://portfolio.dannyzolp.com/", "_blank");
   } else if (cmd === "Q" || cmd === "q") {
     term.write("Q\r\n\nGoodbye\r\n\x1b[0mConnection closed by foreign host.");
     menu = "dead";

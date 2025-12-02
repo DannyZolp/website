@@ -5,3 +5,4 @@ guestbook.db
 *.cer
 *.pem
 *.csr
+.DS_Store
