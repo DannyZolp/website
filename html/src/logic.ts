@@ -35,8 +35,6 @@ function writeHeader(term: Terminal) {
 
 var menu = "main";
 var guestbookPageNumber = 0;
-var typingMessageToSysop = false;
-var sysopMsg = "";
 
 function mainMenuCommand(cmd: string, term: Terminal) {
   if (cmd === "S" || cmd === "s") {
