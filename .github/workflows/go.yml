@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - run: sudo apt install wireguard
-    - run: sudo echo "${{ secrets.WIREGUARD_CONFIG }}" | base64 --decode > /etc/wireguard/wg0.conf
+    - run: echo "${{ secrets.WIREGUARD_CONFIG }}" | base64 -d | sudo tee /etc/wireguard/wg0.conf
     - run: sudo wg-quick up wg0
     - name: Run update script on host
       uses: appleboy/ssh-action@v1
