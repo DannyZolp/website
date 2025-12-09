@@ -54,11 +54,8 @@ jobs:
 
     steps:
     - run: sudo apt install wireguard
-    - run: echo "${{ secrets.WIREGUARD_PRIVATE_KEY }}" > private.key
-    - run: sudo ip link add dev wg0 type wireguard
-    - run: sudo ip address add dev wg0 10.0.69.253 peer 10.0.69.1
-    - run: sudo wg set wg0 listen-port 48000 private-key private.key peer ${{ secrets.WIREGUARD_PEER_PUBLIC_KEY }} allowed-ips 10.0.69.0/24 endpoint ${{ secrets.WIREGUARD_ENDPOINT }}
-    - run: sudo ip link set up dev wg0
+    - run: echo "${{ secrets.WIREGUARD_CONFIG }}" | base64 --decode > /etc/wireguard/wg0.conf
+    - run: wg-quick up wg0
     - name: Run update script on host
       uses: appleboy/ssh-action@v1
       with:
