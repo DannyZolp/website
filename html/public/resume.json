@@ -1,303 +1,291 @@
 {
+  "picture": {
+    "hidden": true,
+    "url": "https://avatars.githubusercontent.com/u/12878237?v=4",
+    "size": 64,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 0,
+    "borderColor": "rgba(0, 0, 0, 0)",
+    "borderWidth": 0,
+    "shadowColor": "rgba(0, 0, 0, 0.5)",
+    "shadowWidth": 0
+  },
   "basics": {
     "name": "Danny Zolp",
     "headline": "",
     "email": "danny@zolp.io",
     "phone": "+1 (262) 808-3082",
     "location": "Madison, WI",
-    "url": {
-      "label": "",
-      "href": ""
+    "website": {
+      "url": "https://dannyzolp.com",
+      "label": ""
     },
     "customFields": [
       {
-        "id": "lulnkmua2nqszg6t9n74htrf",
+        "id": "kcxcgaka7m3ykbjzb4rpoibv",
         "icon": "linkedin-logo",
-        "name": "dannyzolp",
-        "value": "https://www.linkedin.com/in/dannyzolp/"
+        "text": "",
+        "link": ""
       }
-    ],
-    "picture": {
-      "url": "https://avatars.githubusercontent.com/u/12878237?v=4",
-      "size": 64,
-      "aspectRatio": 1,
-      "borderRadius": 0,
-      "effects": {
-        "hidden": true,
-        "border": false,
-        "grayscale": false
-      }
-    }
+    ]
+  },
+  "summary": {
+    "title": "Summary",
+    "columns": 1,
+    "hidden": false,
+    "content": ""
   },
   "sections": {
-    "summary": {
-      "name": "Summary",
+    "profiles": {
+      "title": "Profiles",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "summary",
-      "content": ""
-    },
-    "awards": {
-      "name": "Awards",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "awards",
+      "hidden": false,
       "items": []
-    },
-    "certifications": {
-      "name": "Certifications",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "certifications",
-      "items": []
-    },
-    "education": {
-      "name": "Education",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "education",
-      "items": [
-        {
-          "id": "ne3w0k1w084xa32le3tu1pc0",
-          "visible": true,
-          "institution": "The University of Wisconsin-Madison",
-          "studyType": "Dual Bachelors and Masters",
-          "area": "Computer Science, Physics",
-          "score": "",
-          "date": "Expected May 2027",
-          "summary": "",
-          "url": {
-            "label": "",
-            "href": ""
-          }
-        },
-        {
-          "id": "j40u5xezu0qyymfra37tnjq4",
-          "visible": true,
-          "institution": "The Ohio State University",
-          "studyType": "Bachelors",
-          "area": "Computer Science and Engineering",
-          "score": "",
-          "date": "Aug 2024 - May 2025",
-          "summary": "<ul><li><p>Member of the Collegiate Council on World Affairs and the STEM Scholars program</p></li><li><p>Formalized knowledge of computer science and engineering</p></li></ul>",
-          "url": {
-            "label": "",
-            "href": ""
-          }
-        }
-      ]
     },
     "experience": {
-      "name": "Experience",
+      "title": "Experience",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "experience",
+      "hidden": false,
       "items": [
         {
           "id": "uzmouyqbl21r67545wgdcl4b",
-          "visible": true,
+          "hidden": false,
           "company": "Elkhart Lake's Road America, Inc.",
           "position": "IT Assistant",
           "location": "Elkhart Lake, WI",
-          "date": "May 2024 - Current",
-          "summary": "<ul><li><p>Performed both indoor and outdoor maintenance of networking and audio-visual equipment</p></li><li><p>Improved employee workflows through custom software development</p></li><li><p>Completed a migration of company devices to cloud-based device management</p></li></ul>",
-          "url": {
-            "label": "",
-            "href": "https://roadamerica.com"
-          }
+          "period": "May 2024 - Current",
+          "website": {
+            "url": "https://roadamerica.com",
+            "label": ""
+          },
+          "description": "<ul><li><p>Performed both indoor and outdoor maintenance of networking and audio-visual equipment</p></li><li><p>Improved employee workflows through custom software development</p></li><li><p>Completed a migration of company devices to cloud-based device management</p></li><li><p>Provided off-site support during a ransomware attack, successfully rebuilding essential infrastructure within 48 hours </p></li><li><p>Trained new employees about the company's infrastructure, maintenance, and deployment procedures </p></li></ul>"
         },
         {
           "id": "bqbmnyxn2uofq3ou3ax8rz0t",
-          "visible": true,
+          "hidden": false,
           "company": "Direct Supply, Inc.",
           "position": "IT Helpdesk Intern",
           "location": "Milwaukee, WI",
-          "date": "Jun - Aug 2023",
-          "summary": "<ul><li><p>Utilized help desk software to provide company wide support</p></li><li><p>Learned about enterprise networking, Active Directory/SCCM, and Microsoft Intune</p></li><li><p>Utilized C# to develop hardware inventory tracking software</p></li></ul>",
-          "url": {
-            "label": "",
-            "href": "https://directsupply.com"
-          }
+          "period": "Jun - Aug 2023",
+          "website": {
+            "url": "https://directsupply.com",
+            "label": ""
+          },
+          "description": "<ul><li><p>Utilized Zendesk ticketing software to provide company wide support</p></li><li><p>Developed skills in enterprise networking, Active Directory/SCCM, and Microsoft Intune</p></li><li><p>Created software to inventory deployed hardware across on-premises and hybrid users</p></li></ul>"
         },
         {
           "id": "lsji4zw4713qh5vl392rfh6q",
-          "visible": true,
+          "hidden": false,
           "company": "Concorida University-Wisconsin",
           "position": "Researcher",
           "location": "Mequon, WI",
-          "date": "Jan - Oct 2021",
-          "summary": "<ul><li><p>Obtained a $250,000 grant from Meta, Inc. to research AR/VR implementations</p></li><li><p>Led a team of 12 students to develop and submit proof-of-concepts</p></li><li><p>Worked under tight non-disclosure agreements while maintaining creativity</p></li></ul>",
-          "url": {
-            "label": "",
-            "href": "https://cuw.edu"
-          }
+          "period": "Jan - Oct 2021",
+          "website": {
+            "url": "https://cuw.edu",
+            "label": ""
+          },
+          "description": "<ul><li><p>Obtained a $250,000 grant from Meta, Inc. to research AR/VR implementations</p></li><li><p>Led a team of 12 students to develop and submit proof-of-concepts</p></li><li><p>Worked under tight non-disclosure agreements while maintaining creativity</p></li></ul>"
         }
       ]
     },
-    "volunteer": {
-      "name": "Volunteering",
+    "education": {
+      "title": "Education",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "volunteer",
+      "hidden": false,
       "items": [
         {
-          "id": "zrf0zcogn90l1c4bsp4gode9",
-          "visible": true,
-          "organization": "Wisconsin Civics Games",
-          "position": "Judge",
-          "location": "Madison, WI",
-          "date": "Apr 2025 - Present",
-          "summary": "<ul><li><p>3-year state finalist during high school</p></li><li><p>Now assisting the Wisconsin Newspaper Association with officiating and administration of the competition</p></li></ul>",
-          "url": {
-            "label": "",
-            "href": "https://wnanews.com/wisconsin-civics-games/"
-          }
+          "id": "ne3w0k1w084xa32le3tu1pc0",
+          "hidden": false,
+          "school": "The University of Wisconsin-Madison",
+          "degree": "Bachelors",
+          "area": "Electrical Computer Engineering",
+          "grade": "",
+          "location": "",
+          "period": "Expected May 2028",
+          "website": {
+            "url": "",
+            "label": ""
+          },
+          "description": "<ul><li><p>Joined the UW-Madison Model United Nations team, specifically volunteering for the Wisconsin High School Model United Nations conference hosted at the university</p></li></ul>"
+        },
+        {
+          "id": "j40u5xezu0qyymfra37tnjq4",
+          "hidden": false,
+          "school": "The Ohio State University",
+          "degree": "Bachelors",
+          "area": "Computer Science and Engineering",
+          "grade": "",
+          "location": "",
+          "period": "Aug 2024 - May 2025",
+          "website": {
+            "url": "",
+            "label": ""
+          },
+          "description": "<ul><li><p>Member of the Collegiate Council on World Affairs and the STEM Scholars program</p></li><li><p>Formalized knowledge of computer science and engineering</p></li></ul>"
         }
       ]
     },
-    "interests": {
-      "name": "Interests",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "interests",
-      "items": []
-    },
-    "languages": {
-      "name": "Languages",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "languages",
-      "items": []
-    },
-    "profiles": {
-      "name": "Profiles",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "profiles",
-      "items": []
-    },
     "projects": {
-      "name": "Projects",
+      "title": "Projects",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "projects",
+      "hidden": false,
       "items": [
         {
           "id": "z8ahdq4henmydbcfwc4jc26u",
-          "visible": true,
+          "hidden": false,
           "name": "Music Organizer",
-          "description": "An inventory management program for sheet music",
-          "date": "May - Jul 2022",
-          "summary": "<ul><li><p>Developed an application that allows music librarians to maintain a detailed ledger of their physical and digital sheet music</p></li><li><p>Negotiated with J.W. Pepper, Inc. to acquire the project</p></li></ul>",
-          "keywords": [],
-          "url": {
-            "label": "",
-            "href": "https://github.com/DannyZolp/MusicOrganizer"
-          }
-        },
-        {
-          "id": "u4wbtfddndlncykq5dyyfe8p",
-          "visible": true,
-          "name": "Zyndicate",
-          "description": "A simplified all-in-one workflow system",
-          "date": "Jan - Oct 2021",
-          "summary": "<ul><li><p>Designed and implemented private APIs and frontend interfaces using TypeScript (NodeJS and React)</p></li><li><p>Management deployment and scaling of the application</p></li></ul>",
-          "keywords": [],
-          "url": {
-            "label": "",
-            "href": "https://zyndicate.app/"
-          }
+          "period": "May - Jul 2022",
+          "website": {
+            "url": "https://github.com/DannyZolp/MusicOrganizer",
+            "label": ""
+          },
+          "description": "<ul><li><p>Developed an application that allows music librarians to maintain a detailed ledger of their physical and digital sheet music</p></li><li><p>Negotiated with J.W. Pepper, Inc. to acquire the project</p></li></ul>"
         }
       ]
     },
-    "publications": {
-      "name": "Publications",
+    "skills": {
+      "title": "Skills",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "publications",
+      "hidden": false,
       "items": []
+    },
+    "languages": {
+      "title": "Languages",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "interests": {
+      "title": "Interests",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "awards": {
+      "title": "Awards",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "certifications": {
+      "title": "Certifications",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "publications": {
+      "title": "Publications",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "volunteer": {
+      "title": "Volunteering",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "zrf0zcogn90l1c4bsp4gode9",
+          "hidden": false,
+          "organization": "Wisconsin Civics Games",
+          "location": "Madison, WI",
+          "period": "Apr 2025 - Present",
+          "website": {
+            "url": "https://wnanews.com/wisconsin-civics-games/",
+            "label": ""
+          },
+          "description": "<ul><li><p>3-year state finalist during high school</p></li><li><p>Now assisting the Wisconsin Newspaper Association with officiating and administration of the competition</p></li></ul>"
+        },
+        {
+          "id": "hlaigl1p3rv2h9464wo2vhcp",
+          "hidden": false,
+          "organization": "Houseman and Feind, LLP",
+          "location": "Grafton, WI",
+          "period": "January 2022 - Present",
+          "website": {
+            "url": "https://housemanlaw.com",
+            "label": ""
+          },
+          "description": "<ul><li><p>Provided company wide IT support during a transition between providers</p></li><li><p>Recommended and installed upgrades to employee devices and networking equipment</p></li></ul>"
+        }
+      ]
     },
     "references": {
-      "name": "References",
+      "title": "References",
       "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "references",
+      "hidden": false,
       "items": []
-    },
-    "skills": {
-      "name": "Skills",
-      "columns": 1,
-      "separateLinks": true,
-      "visible": true,
-      "id": "skills",
-      "items": []
-    },
-    "custom": {}
+    }
   },
+  "customSections": [],
   "metadata": {
-    "template": "glalie",
-    "layout": [
-      [
-        [
-          "profiles",
-          "summary",
-          "experience",
-          "education",
-          "projects",
-          "volunteer",
-          "references"
-        ],
-        [
-          "skills",
-          "interests",
-          "certifications",
-          "awards",
-          "publications",
-          "languages"
-        ]
+    "template": "bronzor",
+    "layout": {
+      "sidebarWidth": 35,
+      "pages": [
+        {
+          "fullWidth": false,
+          "main": [
+            "profiles",
+            "experience",
+            "education",
+            "projects",
+            "volunteer",
+            "references"
+          ],
+          "sidebar": [
+            "skills",
+            "interests",
+            "certifications",
+            "awards",
+            "publications",
+            "languages"
+          ]
+        }
       ]
-    ],
+    },
     "css": {
-      "value": "",
-      "visible": false
+      "enabled": false,
+      "value": ""
     },
     "page": {
-      "margin": 18,
+      "gapX": 4,
+      "gapY": 6,
+      "marginX": 18,
+      "marginY": 18,
       "format": "letter",
-      "options": {
-        "breakLine": true,
-        "pageNumbers": false
+      "locale": "en-US",
+      "hideIcons": false
+    },
+    "design": {
+      "level": {
+        "icon": "star",
+        "type": "circle"
+      },
+      "colors": {
+        "primary": "rgba(220, 38, 38, 1)",
+        "text": "rgba(0, 0, 0, 1)",
+        "background": "rgba(253, 252, 250, 1)"
       }
     },
-    "theme": {
-      "background": "#fdfcfa",
-      "text": "#000000",
-      "primary": "#dc2626"
-    },
     "typography": {
-      "font": {
-        "family": "IBM Plex Serif",
-        "subset": "latin",
-        "variants": [
-          "regular"
+      "body": {
+        "fontFamily": "IBM Plex Serif",
+        "fontWeights": [
+          "400"
         ],
-        "size": 13
+        "fontSize": 9,
+        "lineHeight": 1.1
       },
-      "lineHeight": 1.1,
-      "hideIcons": false,
-      "underlineLinks": false
+      "heading": {
+        "fontFamily": "IBM Plex Serif",
+        "fontWeights": [
+          "600"
+        ],
+        "fontSize": 12,
+        "lineHeight": 1.1
+      }
     },
     "notes": ""
   }
