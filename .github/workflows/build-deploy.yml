@@ -52,9 +52,9 @@ jobs:
 
     steps:
     - run: curl -fsSL https://pkgs.netbird.io/install.sh | sh
+    - run: netbird up --management-url ${{ secrets.NETBIRD_MANAGEMENT_URL }} --setup-key ${{ secrets.NETBIRD_SETUP_KEY }}
     - run: |
-        netbird up --management-url ${{ secrets.NETBIRD_MANAGEMENT_URL }} --setup-key ${{ secrets.NETBIRD_SETUP_KEY }}
         mkdir -p ~/.ssh/
         ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-        netbird ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "bash UpdateServer"
-        netbird deregister
+    - run: netbird ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "bash UpdateServer"
+    - run: netbird deregister
