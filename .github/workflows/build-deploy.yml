@@ -1,7 +1,4 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
+name: Test build and then publish to production
 
 on:
   push:
@@ -44,7 +41,8 @@ jobs:
       run: pnpm install
     - name: Attempt build
       run: pnpm build
-  
+
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build-go, build-vite]
@@ -53,13 +51,6 @@ jobs:
       url: 'dannyzolp.com'
 
     steps:
-    - run: sudo apt install wireguard
-    - run: echo "${{ secrets.WIREGUARD_CONFIG }}" | base64 -d | sudo tee /etc/wireguard/wg0.conf
-    - run: sudo wg-quick up wg0
-    - name: Run update script on host
-      uses: appleboy/ssh-action@v1
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        script: ~/UpdateServer
+    - run: curl -fsSL https://pkgs.netbird.io/install.sh | sh
+    - run: netbird up --management-url ${{ secrets.NETBIRD_MANAGEMENT_URL }} --setup-key ${{ secrets.NETBIRD_SETUP_KEY }}
+    - run: netbird ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "~/UpdateServer"
