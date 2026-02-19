@@ -3,7 +3,6 @@ import {
   header,
   socialMedia,
   resume,
-  resumeMenu,
   guestbookMenu,
   guestbookPage,
 } from "./menus.ts";

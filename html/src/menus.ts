@@ -86,21 +86,21 @@ export const resume = async (term: Terminal) => {
   ];
 };
 
-export const resumeMenu = (term: Terminal) => {
-  return [
-    () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n"),
-    () => term.write("   |" + " ".repeat(79) + "|\r\n"),
-    () =>
-      term.write(
-        "   |        \x1b[1mP - View PDF" +
-          " ".repeat(24) +
-          "T - View as Text                   |\r\n"
-      ),
-    () => term.write("   |" + " ".repeat(79) + "|\r\n"),
-    () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n\n"),
-    () => term.write("Resume> "),
-  ];
-};
+// export const resumeMenu = (term: Terminal) => {
+//   return [
+//     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n"),
+//     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
+//     () =>
+//       term.write(
+//         "   |        \x1b[1mP - View PDF" +
+//           " ".repeat(24) +
+//           "T - View as Text                   |\r\n"
+//       ),
+//     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
+//     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n\n"),
+//     () => term.write("Resume> "),
+//   ];
+// };
 
 export const guestbookMenu = (term: Terminal) => {
   return [
