@@ -43,9 +43,8 @@ function mainMenuCommand(cmd: string, term: Terminal) {
     printWithModemDelay(sm);
   } else if (cmd === "R" || cmd === "r") {
     term.write("R\r\n\n");
-    menu = "resume";
-    const rm = resumeMenu(term);
-    printWithModemDelay(rm);
+    window.open("/resume.pdf", "_blank");
+    term.write("Main Menu> ");
   } else if (cmd === "G" || cmd === "g") {
     term.write("G\r\n\n");
     menu = "guestbook";
