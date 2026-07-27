@@ -1,8 +1,0 @@
-.env
-guestbook.db
-*.key
-*.pfx
-*.cer
-*.pem
-*.csr
-.DS_Store
