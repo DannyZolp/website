@@ -126,6 +126,10 @@ type GuestbookEntry = {
 
 export const guestbookPage = (term: Terminal, entries: GuestbookEntry[]) => {
   return entries.map((e) => {
+    if (e.m.length <= 0) {
+      e.m = "\x1b[0m\x1b[3m<no message>\x1b[0m\x1b[1m";
+    }
+
     return () => term.write("    [" + e.d + "]  " + e.n + ": " + e.m + "\r\n");
   });
 };
