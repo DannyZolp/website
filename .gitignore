@@ -25,3 +25,6 @@ dist-ssr
 
 # cloudflare
 .wrangler
+
+# pnpm allowed builds
+pnpm-workspace.yaml
