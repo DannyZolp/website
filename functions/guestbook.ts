@@ -12,22 +12,6 @@ type GuestbookResponse = {
   d: string; // page data
 };
 
-// function to be called if the query parameter "p" is not set
-async function getGuestbookLatestPage(
-  kv: KVNamespace<string>,
-): Promise<Response> {
-  const lastPage = await kv.get("lastpage");
-  const pageData = await kv.get(lastPage ?? "0");
-
-  return new Response(
-    JSON.stringify({
-      l: lastPage ?? "0",
-      p: lastPage ?? "0",
-      d: pageData ?? "[]",
-    } as GuestbookResponse),
-  );
-}
-
 async function getGuestbookPage(
   kv: KVNamespace<string>,
   page: string,
@@ -101,7 +85,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     const page = url.searchParams.get("p");
 
     if (page === null) {
-      return await getGuestbookLatestPage(context.env.KV);
+      return await getGuestbookPage(context.env.KV, "0");
     } else {
       return await getGuestbookPage(context.env.KV, page);
     }

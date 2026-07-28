@@ -85,7 +85,7 @@ function resumeMenuCommand(cmd: string, term: Terminal) {
 }
 
 var viewingGuestbook = false;
-// var lastPageIdx = 0;
+var lastPageIdx = 0;
 var typingName = false;
 var typingMessage = false;
 var name = "";
@@ -161,7 +161,7 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
     fetch(`/guestbook`)
       .then((r) => r.json())
       .then((page) => {
-        // lastPageIdx = Number.parseInt(page.l);
+        lastPageIdx = Number.parseInt(page.l);
         guestbookPageNumber = Number.parseInt(page.p);
 
         printWithModemDelay(guestbookPage(term, JSON.parse(page.d))).then(
@@ -172,16 +172,16 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
       });
   } else if ((cmd === "N" || cmd === "n") && viewingGuestbook) {
     term.write("N\r\n\n");
-    if (guestbookPageNumber - 1 < 0) {
+    if (guestbookPageNumber + 1 < lastPageIdx) {
       term.write("There are no more entries.\r\n\nGuestbook> ");
       viewingGuestbook = false;
       return;
     }
-    guestbookPageNumber--;
+    guestbookPageNumber++;
     fetch(`/guestbook?p=${guestbookPageNumber}`)
       .then((r) => r.json())
       .then((page) => {
-        // lastPageIdx = Number.parseInt(page.l);
+        lastPageIdx = Number.parseInt(page.l);
         guestbookPageNumber = Number.parseInt(page.p);
 
         printWithModemDelay(guestbookPage(term, JSON.parse(page.d))).then(
