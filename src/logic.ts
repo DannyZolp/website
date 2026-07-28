@@ -172,7 +172,7 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
       });
   } else if ((cmd === "N" || cmd === "n") && viewingGuestbook) {
     term.write("N\r\n\n");
-    if (guestbookPageNumber + 1 < lastPageIdx) {
+    if (guestbookPageNumber + 1 > lastPageIdx) {
       term.write("There are no more entries.\r\n\nGuestbook> ");
       viewingGuestbook = false;
       return;
