@@ -1,0 +1,3 @@
+\x1b[37;1mGitHub:    https://github.com/DannyZolp
+\x1b[34;1mLinkedIn:  https://linkedin.com/in/DannyZolp
+\x1b[95;1mInstagram: https://instagram.com/DannyZolp
