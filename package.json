@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec \"tsc && vite build && wrangler pages dev\" --watch \"./src\"",
+    "deploy": "pnpm vite:build && wrangler pages deploy",
     "vite:dev": "vite",
     "vite:build": "tsc && vite build",
     "vite:preview": "vite preview",
     "wrangler:types": "wrangler types ./functions/types.d.ts",
+    "wrangler:deploy": "wrangler deploy",
     "wrangler:dev": "wrangler pages dev"
   },
   "devDependencies": {
