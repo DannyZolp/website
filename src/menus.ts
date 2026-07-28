@@ -43,7 +43,7 @@ export const resume = async (term: Terminal) => {
           resume.basics.email +
           " - " +
           resume.basics.phone +
-          "\r\n\n"
+          "\r\n\n",
       ),
     () => term.write(" ".repeat(20) + "\x1b[1mExperience:\r\n\n\x1b[0m"),
     ...resume.sections.experience.items.map((e: ResumeExperience) => {
@@ -54,7 +54,7 @@ export const resume = async (term: Terminal) => {
             e.date +
             "\r\n" +
             e.position +
-            "\r\n\n"
+            "\r\n\n",
         );
     }),
     () => term.write(" ".repeat(20) + "\x1b[1mEducation:\r\n\n\x1b[0m"),
@@ -68,7 +68,7 @@ export const resume = async (term: Terminal) => {
             e.studyType +
             "\r\n" +
             e.area +
-            "\r\n\n"
+            "\r\n\n",
         );
     }),
     () => term.write(" ".repeat(20) + "\x1b[1mVolunteering:\r\n\n\x1b[0m"),
@@ -80,7 +80,7 @@ export const resume = async (term: Terminal) => {
             e.date +
             "\r\n" +
             e.position +
-            "\r\n\n"
+            "\r\n\n",
         );
     }),
   ];
@@ -110,7 +110,7 @@ export const guestbookMenu = (term: Terminal) => {
       term.write(
         "   |        \x1b[1mV - View Guestbook" +
           " ".repeat(20) +
-          "A - Add to Guestbook             |\r\n"
+          "A - Add to Guestbook             |\r\n",
       ),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n\n"),
@@ -119,15 +119,14 @@ export const guestbookMenu = (term: Terminal) => {
 };
 
 type GuestbookEntry = {
-  date: string;
-  name: string;
-  message: string;
+  d: string; // date
+  n: string; // name
+  m: string; // message
 };
 
 export const guestbookPage = (term: Terminal, entries: GuestbookEntry[]) => {
   return entries.map((e) => {
-    return () =>
-      term.write("    [" + e.date + "]  " + e.name + ": " + e.message + "\r\n");
+    return () => term.write("    [" + e.d + "]  " + e.n + ": " + e.m + "\r\n");
   });
 };
 
@@ -137,31 +136,31 @@ export const header = (term: Terminal) => {
 
     () =>
       term.write(
-        "\x1b[36;1m      +++++>.                                           \x1b[35;1m<<<<<<<          //\n\r"
+        "\x1b[36;1m      +++++>.                                           \x1b[35;1m<<<<<<<          //\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m     .(     (_  .>=>>.<- <.<++<_  <.<<<<_ ..     <        \x1b[35;1m_/<  _.<<<.   (  <_-<><_\n\r"
+        "\x1b[36;1m     .(     (_  .>=>>.<- <.<++<_  <.<<<<_ ..     <        \x1b[35;1m_/<  _.<<<.   (  <_-<><_\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m     ()      (>.(    (( .(<    (  (/    (  (   _(        \x1b[35;1m</   /<    \\) .( /(     ()\n\r"
+        "\x1b[36;1m     ()      (>.(    (( .(<    (  (/    (  (   _(        \x1b[35;1m</   /<    \\) .( /(     ()\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m     (-     .( (>     /( (/    .( ((     (  () /)       \x1b[35;1m.(    (/     _( (< (      /(\n\r"
+        "\x1b[36;1m     (-     .( (>     /( (/    .( ((     (  () /)       \x1b[35;1m.(    (/     _( (< (      /(\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m    )(   _.+/  (\\   _/(> (     (/ (-    ()   ((/      \x1b[35;1m_/<     (<    .(  ( .(\\   _<)\n\r"
+        "\x1b[36;1m    )(   _.+/  (\\   _/(> (     (/ (-    ()   ((/      \x1b[35;1m_/<     (<    .(  ( .(\\   _<)\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m    \\<<<(\\       \\<<\\ <  <     <  <     -    (<       \x1b[35;1m-------    --     - (> ---\n\r"
+        "\x1b[36;1m    \\<<<(\\       \\<<\\ <  <     <  <     -    (<       \x1b[35;1m-------    --     - (> ---\n\r",
       ),
     () =>
       term.write(
-        "\x1b[36;1m                                           _(                             \x1b[35;1m(\r\n\n"
+        "\x1b[36;1m                                           _(                             \x1b[35;1m(\r\n\n",
       ),
 
     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n"),
@@ -170,21 +169,21 @@ export const header = (term: Terminal) => {
       term.write(
         "   |        \x1b[1mS - Social Medias" +
           " ".repeat(20) +
-          "R - Get Resume                    |\r\n"
+          "R - Get Resume                    |\r\n",
       ),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
     () =>
       term.write(
         "   |        \x1b[1mG - Access Guestbook" +
           " ".repeat(17) +
-          "P - View Portfolio                |\r\n"
+          "P - View Portfolio                |\r\n",
       ),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
     () =>
       term.write(
         "   |        \x1b[1mB - Navigate back to Main Menu" +
           " ".repeat(7) +
-          "Q - Quit                          |\r\n"
+          "Q - Quit                          |\r\n",
       ),
     () => term.write("   |" + " ".repeat(79) + "|\r\n"),
     () => term.write("\x1b[37m    " + "=".repeat(79) + "\r\n\n"),

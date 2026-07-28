@@ -18,10 +18,13 @@ async function printWithModemDelay(array: (() => void)[]) {
       }
     }, delay);
 
-    setTimeout(() => {
-      clearInterval(print);
-      res(true);
-    }, delay * array.length + 500);
+    setTimeout(
+      () => {
+        clearInterval(print);
+        res(true);
+      },
+      delay * array.length + 500,
+    );
   });
 }
 
@@ -50,7 +53,7 @@ function mainMenuCommand(cmd: string, term: Terminal) {
     const gm = guestbookMenu(term);
     printWithModemDelay(gm);
   } else if (cmd === "P" || cmd === "p") {
-    term.write("P\r\n\n")
+    term.write("P\r\n\n");
     window.open("https://portfolio.dannyzolp.com/", "_blank");
     term.write("Main Menu> ");
   } else if (cmd === "Q" || cmd === "q") {
@@ -82,6 +85,7 @@ function resumeMenuCommand(cmd: string, term: Terminal) {
 }
 
 var viewingGuestbook = false;
+// var lastPageIdx = 0;
 var typingName = false;
 var typingMessage = false;
 var name = "";
@@ -116,23 +120,23 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
       fetch("/guestbook", {
         method: "POST",
         body: JSON.stringify({
-          name,
-          message,
+          n: name,
+          m: message,
         }),
       })
         .then((r) => r.json())
         .then((res) => {
-          if (res === "OK") {
+          if (res === true) {
             term.write("\r\nAdded to guestbook!\r\n\nGuestbook> ");
           } else {
             term.write(
-              "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> "
+              "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> ",
             );
           }
         })
         .catch(() => {
           term.write(
-            "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> "
+            "\r\nThere was an error adding you to the guestbook.\r\n\nGuestbook> ",
           );
         });
     } else if (cmd === "\x7f") {
@@ -154,27 +158,37 @@ function guestbookMenuCommand(cmd: string, term: Terminal) {
   } else if (cmd === "V" || cmd === "v") {
     term.write("V\r\n\n");
     viewingGuestbook = true;
-    guestbookPageNumber = 0;
-    fetch(`/guestbook/${guestbookPageNumber}`)
+    fetch(`/guestbook`)
       .then((r) => r.json())
       .then((page) => {
-        printWithModemDelay(guestbookPage(term, page)).then(() => {
-          term.write("\nType N for next page\r\n\nGuestbook> ");
-        });
+        // lastPageIdx = Number.parseInt(page.l);
+        guestbookPageNumber = Number.parseInt(page.p);
+
+        printWithModemDelay(guestbookPage(term, JSON.parse(page.d))).then(
+          () => {
+            term.write("\nType N for next page\r\n\nGuestbook> ");
+          },
+        );
       });
   } else if ((cmd === "N" || cmd === "n") && viewingGuestbook) {
     term.write("N\r\n\n");
-    guestbookPageNumber++;
-    fetch(`/guestbook/${guestbookPageNumber}`)
+    if (guestbookPageNumber - 1 < 0) {
+      term.write("There are no more entries.\r\n\nGuestbook> ");
+      viewingGuestbook = false;
+      return;
+    }
+    guestbookPageNumber--;
+    fetch(`/guestbook?p=${guestbookPageNumber}`)
       .then((r) => r.json())
       .then((page) => {
-        printWithModemDelay(guestbookPage(term, page)).then(() => {
-          term.write("\nType N for next page\r\n\nGuestbook> ");
-        });
-      })
-      .catch(() => {
-        term.write("There are no more entries.\r\n\nGuestbook> ");
-        viewingGuestbook = false;
+        // lastPageIdx = Number.parseInt(page.l);
+        guestbookPageNumber = Number.parseInt(page.p);
+
+        printWithModemDelay(guestbookPage(term, JSON.parse(page.d))).then(
+          () => {
+            term.write("\nType N for next page\r\n\nGuestbook> ");
+          },
+        );
       });
   } else if (cmd === "A" || cmd === "a") {
     term.write("A\r\n\nWhat is your name? (Ctrl+C to cancel) ");
