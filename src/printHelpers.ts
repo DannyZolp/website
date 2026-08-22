@@ -7,21 +7,31 @@ import type { GuestbookEntry } from "./menus/guestbook/view";
 
 type Blob = "main-menu" | "social-media" | "guestbook-menu" | "logo";
 
+const MODEM_BAUD_RATE = 56_000;
+const BITS_PER_CHARACTER = 10; // 8 data bits, plus start and stop bits (8-N-1)
+const CHARACTERS_PER_MILLISECOND = MODEM_BAUD_RATE / BITS_PER_CHARACTER / 1_000;
+
+function nextAnimationFrame() {
+  return new Promise<number>((resolve) => requestAnimationFrame(resolve));
+}
+
 export async function printWithModemDelay(term: Terminal, lines: string[]) {
-  const delay = ((80 * 7) / 56000) * 1000;
+  const text = lines.join("\r\n");
+  const startedAt = performance.now();
+  let charactersWritten = 0;
 
-  return new Promise((res, _rej) => {
-    for (let i = 0; i < lines.length; i++) {
-      setTimeout(() => term.write(lines[i] + "\r\n"), delay * (i + 1));
-    }
-
-    setTimeout(
-      () => {
-        res(true);
-      },
-      delay * lines.length + 250,
+  while (charactersWritten < text.length) {
+    const now = await nextAnimationFrame();
+    const charactersDue = Math.min(
+      text.length,
+      Math.floor((now - startedAt) * CHARACTERS_PER_MILLISECOND),
     );
-  });
+
+    if (charactersDue > charactersWritten) {
+      term.write(text.slice(charactersWritten, charactersDue));
+      charactersWritten = charactersDue;
+    }
+  }
 }
 
 function getTextBlob(blob: Blob) {
