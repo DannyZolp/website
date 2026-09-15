@@ -14,15 +14,15 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14",
-    "typescript": "~6.0.2",
-    "vite": "^8.1.1",
-    "wrangler": "^4.114.0"
+    "typescript": "~6.0.3",
+    "vite": "^8.3.0",
+    "wrangler": "^4.131.2"
   },
   "dependencies": {
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/addon-web-links": "^0.12.0",
     "@xterm/xterm": "^6.0.0",
-    "axios": "^1.18.1",
+    "axios": "^1.20.0",
     "date-fns": "^4.4.0"
   }
 }
